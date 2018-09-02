@@ -11,18 +11,24 @@ public class BingoGame {
 	private final ArrayList<BingoBoard> boardList;
 
 	BingoGame(final int players) {
-		this.eventList = new ArrayList<>();
-		this.playerCount = players;
-		this.winnerDetermined = false;
+		eventList = new ArrayList<>();
+		playerCount = players;
+		winnerDetermined = false;
 		boardList = new ArrayList<>();
 	}
 
-	public void addEvent(final String event) {
-		this.eventList.add(event);
+	private void addEvent(final String event) {
+		eventList.add(event);
+	}
+
+	public void addEvents() {
+		for (int i = 1; i <= 25; i++) {
+			addEvent(Integer.toString(i));
+		}
 	}
 
 	public void startGame() {
-		for (int i = 1; i <= this.playerCount; i++) {
+		for (int i = 1; i <= playerCount; i++) {
 			createAndPrintPlayerBoards(i);
 		}
 
@@ -43,7 +49,7 @@ public class BingoGame {
 			}
 		}
 
-		this.printAllWinners();
+		printAllWinners();
 
 	}
 
