@@ -2,6 +2,8 @@ package future;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class BingoBoard {
@@ -11,9 +13,9 @@ public class BingoBoard {
 	private final int HEIGHT = 5;
 	private final int BOARD_SIZE = WIDTH * HEIGHT;
 
-	private final HashMap<String, Boolean> eventCalledMap;
-	private final ArrayList<String> events;
-	private final ArrayList<String> selectedEvents;
+	private final Map<String, Boolean> eventCalledMap;
+	private final List<String> events;
+	private final List<String> selectedEvents;
 
 	private final String FREE = "FREE SPACE";
 	private final int player;
@@ -45,6 +47,7 @@ public class BingoBoard {
 			selectedEvents.add(str);
 			events.remove(str);
 		}
+
 		int count = 0;
 		for (final String str : selectedEvents) {
 			eventCalledMap.put(str, false);
@@ -60,21 +63,39 @@ public class BingoBoard {
 
 	public void printBoard() {
 		System.out.printf("Player %d\n", this.player);
-		System.out.println("_____________________");
-		for (int i = 0; i < BOARD_DIM; i++) {
 
-			System.out.println("|---|---|---|---|---|");
-			for (int j = 0; j < BOARD_DIM; j++) {
-				if (eventCalledMap.get(board[i][j]) == true) {
-					System.out.printf("|%3s", "X");
-				} else {
-					System.out.printf("|%3s", board[i][j]);
-				}
-			}
-			System.out.println("|");
+		printTopRow();
+
+		for (int i = 0; i < HEIGHT; i++) {
+			printRowSeparator();
+			printLine(i);
 		}
-		System.out.println("|---|---|---|---|---|");
+		printRowSeparator();
+		printBottomRow();
+	}
+
+	private void printBottomRow() {
 		System.out.println("_____________________\n\n");
+	}
+
+	private void printTopRow() {
+		System.out.println("_____________________");
+	}
+
+	private void printLine(final int i) {
+		for (int j = 0; j < BOARD_DIM; j++) {
+			if (eventCalledMap.get(board[i][j]) == true) {
+				System.out.printf("|%3s", "X");
+			} else {
+				System.out.printf("|%3s", board[i][j]);
+			}
+		}
+
+		System.out.println("|");
+	}
+
+	private void printRowSeparator() {
+		System.out.println("|---|---|---|---|---|");
 	}
 
 	public void putMarker(final String value) {
@@ -130,6 +151,7 @@ public class BingoBoard {
 
 		i = 0;
 		count = 0;
+
 		// Checks the top left to bottom right diagnal for a win.
 		while (eventCalledMap.get(board[i][i]) != false) {
 			count++;
