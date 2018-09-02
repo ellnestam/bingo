@@ -15,27 +15,7 @@ public class BingoBoard {
 	private final int player;
 	private boolean win;
 
-	BingoBoard() {
-		board = new String[BOARD_DIM][BOARD_DIM];
-		selectedEvents = new ArrayList<>();
-		events = new ArrayList<>();
-		eventCalledMap = new HashMap<>();
-		eventCalledMap.put(FREE, true);
-		player = -1;
-		win = false;
-	}
-
-	BingoBoard(final ArrayList<String> eventList) {
-		board = new String[BOARD_DIM][BOARD_DIM];
-		selectedEvents = new ArrayList<>();
-		events = eventList;
-		eventCalledMap = new HashMap<>();
-		eventCalledMap.put(FREE, true);
-		player = -1;
-		win = false;
-	}
-
-	BingoBoard(final ArrayList<String> eventList, final int numb) {
+	public BingoBoard(final ArrayList<String> eventList, final int numb) {
 		board = new String[BOARD_DIM][BOARD_DIM];
 		selectedEvents = new ArrayList<>();
 		events = eventList;

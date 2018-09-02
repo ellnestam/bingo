@@ -6,17 +6,9 @@ import java.util.Scanner;
 public class BingoGame {
 
 	private final ArrayList<String> eventList;
-	private final int DEFAULT_PLAYER_COUNT = 2;
 	private final int playerCount;
 	private boolean winnerDetermined;
 	private final ArrayList<BingoBoard> boardList;
-
-	BingoGame() {
-		this.eventList = new ArrayList<>();
-		this.playerCount = DEFAULT_PLAYER_COUNT;
-		this.winnerDetermined = false;
-		this.boardList = new ArrayList<>();
-	}
 
 	BingoGame(final int players) {
 		this.eventList = new ArrayList<>();
