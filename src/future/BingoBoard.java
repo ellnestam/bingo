@@ -7,16 +7,20 @@ import java.util.Random;
 public class BingoBoard {
 	private final String board[][];
 	private final int BOARD_DIM = 5;
-	private final int MAX_SIZE = BOARD_DIM * BOARD_DIM;
+	private final int WIDTH = 5;
+	private final int HEIGHT = 5;
+	private final int BOARD_SIZE = WIDTH * HEIGHT;
+
 	private final HashMap<String, Boolean> eventCalledMap;
 	private final ArrayList<String> events;
 	private final ArrayList<String> selectedEvents;
+
 	private final String FREE = "FREE SPACE";
 	private final int player;
 	private boolean win;
 
 	public BingoBoard(final ArrayList<String> eventList, final int numb) {
-		board = new String[BOARD_DIM][BOARD_DIM];
+		board = new String[WIDTH][HEIGHT];
 		selectedEvents = new ArrayList<>();
 		events = eventList;
 		eventCalledMap = new HashMap<>();
@@ -31,10 +35,10 @@ public class BingoBoard {
 
 	// Chooses events and adds them to the board.
 	public boolean randomizeEvents() {
-		if (this.events.size() < MAX_SIZE - 1) {
+		if (this.events.size() < BOARD_SIZE - 1) {
 			return false;
 		}
-		while (selectedEvents.size() < MAX_SIZE - 1) {
+		while (selectedEvents.size() < BOARD_SIZE - 1) {
 			final Random rand = new Random();
 			final int index = rand.nextInt(this.events.size());
 			final String str = events.get(index);
@@ -44,7 +48,7 @@ public class BingoBoard {
 		int count = 0;
 		for (final String str : selectedEvents) {
 			eventCalledMap.put(str, false);
-			if (count == MAX_SIZE / 2) {
+			if (count == BOARD_SIZE / 2) {
 				board[count / BOARD_DIM][count % BOARD_DIM] = FREE;
 				count++;
 			}
