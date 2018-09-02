@@ -1,14 +1,15 @@
 package future;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class BingoGame {
 
-	private final ArrayList<String> eventList;
+	private final List<String> eventList;
 	private final int playerCount;
 	private boolean winnerDetermined;
-	private final ArrayList<BingoBoard> boardList;
+	private final List<BingoBoard> boardList;
 
 	BingoGame(final int players) {
 		eventList = new ArrayList<>();
@@ -54,7 +55,7 @@ public class BingoGame {
 	}
 
 	private void createAndPrintPlayerBoards(final int i) {
-		final ArrayList<String> events = (ArrayList<String>) eventList.clone();
+		final ArrayList<String> events = new ArrayList<String>(eventList);
 		final BingoBoard board = new BingoBoard(events, i);
 		board.randomizeEvents();
 		boardList.add(board);

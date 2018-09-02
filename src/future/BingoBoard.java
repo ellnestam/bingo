@@ -37,12 +37,12 @@ public class BingoBoard {
 
 	// Chooses events and adds them to the board.
 	public boolean randomizeEvents() {
-		if (this.events.size() < BOARD_SIZE - 1) {
+		if (events.size() < BOARD_SIZE - 1) {
 			return false;
 		}
 		while (selectedEvents.size() < BOARD_SIZE - 1) {
 			final Random rand = new Random();
-			final int index = rand.nextInt(this.events.size());
+			final int index = rand.nextInt(events.size());
 			final String str = events.get(index);
 			selectedEvents.add(str);
 			events.remove(str);
@@ -63,7 +63,7 @@ public class BingoBoard {
 	}
 
 	public void printBoard() {
-		System.out.printf("Player %d\n", this.player);
+		System.out.printf("Player %d\n", player);
 
 		printTopRow();
 
@@ -109,12 +109,12 @@ public class BingoBoard {
 	 * Checks board for a win and returns true if board won and false otherwise.
 	 */
 	public boolean checkWin() {
-		this.win = evalBoard();
-		return this.win;
+		win = evalBoard();
+		return win;
 	}
 
 	public boolean hasWinningRow() {
-		return this.win;
+		return win;
 	}
 
 	public int getPlayer() {
