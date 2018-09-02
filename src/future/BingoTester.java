@@ -1,22 +1,15 @@
 package future;
 
-/**
- *
- * @author Dom
- */
 public class BingoTester {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) 
-    {
+	public static void main(final String[] args) {
 
-            BingoGame game = new BingoGame(4);
+		final BingoGame game = new BingoGame(2);
 
-            for(int i=1; i<=25; i++)
-                game.addEvent(Integer.toString(i));
-            game.startGame();
+		for (int i = 1; i <= 25; i++) {
+			game.addEvent(Integer.toString(i));
+		}
+		game.startGame();
 
-    }//end main
-}//end class
+	}
+}
