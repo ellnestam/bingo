@@ -1,6 +1,6 @@
 package future;
 
-public class BingoTester {
+public class Launcher {
 
 	public static void main(final String[] args) {
 
@@ -9,6 +9,7 @@ public class BingoTester {
 		for (int i = 1; i <= 25; i++) {
 			game.addEvent(Integer.toString(i));
 		}
+
 		game.startGame();
 
 	}

@@ -21,7 +21,6 @@ public class BingoGame {
 		this.eventList.add(event);
 	}
 
-	// Main driver for the game.
 	public void startGame() {
 		for (int i = 1; i <= this.playerCount; i++) {
 			createAndPrintPlayerBoards(i);
