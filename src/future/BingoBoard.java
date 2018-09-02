@@ -49,6 +49,7 @@ public class BingoBoard {
 		}
 
 		int count = 0;
+
 		for (final String str : selectedEvents) {
 			eventCalledMap.put(str, false);
 			if (count == BOARD_SIZE / 2) {
@@ -98,7 +99,7 @@ public class BingoBoard {
 		System.out.println("|---|---|---|---|---|");
 	}
 
-	public void putMarker(final String value) {
+	public void markNumber(final String value) {
 		if (eventCalledMap.containsKey(value)) {
 			eventCalledMap.put(value, Boolean.TRUE);
 		}
@@ -112,7 +113,7 @@ public class BingoBoard {
 		return this.win;
 	}
 
-	public boolean won() {
+	public boolean hasWinningRow() {
 		return this.win;
 	}
 

@@ -23,43 +23,47 @@ public class BingoGame {
 
 	// Main driver for the game.
 	public void startGame() {
-		winnerDetermined = false;
 		for (int i = 1; i <= this.playerCount; i++) {
-			final ArrayList<String> events = (ArrayList<String>) eventList.clone();
-			final BingoBoard board = new BingoBoard(events, i);
-			board.randomizeEvents();
-			this.boardList.add(board);
-			board.printBoard();
+			createAndPrintPlayerBoards(i);
 		}
+
+		winnerDetermined = false;
 
 		final Scanner in = new Scanner(System.in);
 		while (winnerNotDetermined()) {
 			System.out.println("Enter Event:");
 			final String check = in.next();
-			for (final BingoBoard boards : boardList) {
-				boards.putMarker(check);
-				boards.printBoard();
+			for (final BingoBoard board : boardList) {
+				board.markNumber(check);
+				board.printBoard();
 				if (winnerNotDetermined()) {
-					winnerDetermined = boards.checkWin();
+					winnerDetermined = board.checkWin();
 				} else {
-					boards.checkWin();
+					board.checkWin();
 				}
 			}
 		}
 
-		this.printWinner();
+		this.printAllWinners();
 
+	}
+
+	private void createAndPrintPlayerBoards(final int i) {
+		final ArrayList<String> events = (ArrayList<String>) eventList.clone();
+		final BingoBoard board = new BingoBoard(events, i);
+		board.randomizeEvents();
+		boardList.add(board);
+		board.printBoard();
 	}
 
 	private boolean winnerNotDetermined() {
 		return !winnerDetermined;
 	}
 
-	// Prints out winning boards. More than one player may win.
-	private void printWinner() {
-		for (final BingoBoard boards : boardList) {
-			if (boards.won()) {
-				System.out.printf("Player %d wins!\n\n", boards.getPlayer());
+	private void printAllWinners() {
+		for (final BingoBoard board : boardList) {
+			if (board.hasWinningRow()) {
+				System.out.printf("Player %d wins!\n\n", board.getPlayer());
 			}
 		}
 	}
