@@ -23,7 +23,7 @@ public class BingoGame {
 
 	// Main driver for the game.
 	public void startGame() {
-		this.winnerDetermined = false;
+		winnerDetermined = false;
 		for (int i = 1; i <= this.playerCount; i++) {
 			final ArrayList<String> events = (ArrayList<String>) eventList.clone();
 			final BingoBoard board = new BingoBoard(events, i);
@@ -33,13 +33,13 @@ public class BingoGame {
 		}
 
 		final Scanner in = new Scanner(System.in);
-		while (this.winnerDetermined == false) {
+		while (winnerNotDetermined()) {
 			System.out.println("Enter Event:");
 			final String check = in.next();
 			for (final BingoBoard boards : boardList) {
 				boards.putMarker(check);
 				boards.printBoard();
-				if (winnerDetermined == false) {
+				if (winnerNotDetermined()) {
 					winnerDetermined = boards.checkWin();
 				} else {
 					boards.checkWin();
@@ -49,6 +49,10 @@ public class BingoGame {
 
 		this.printWinner();
 
+	}
+
+	private boolean winnerNotDetermined() {
+		return !winnerDetermined;
 	}
 
 	// Prints out winning boards. More than one player may win.
