@@ -8,12 +8,13 @@ import java.util.Random;
 
 public class BingoBoard {
 	private final String board[][];
-	private final int BOARD_DIM = 5;
+
 	private final int WIDTH = 5;
 	private final int HEIGHT = 5;
+
 	private final int BOARD_SIZE = WIDTH * HEIGHT;
 
-	private final Map<String, Boolean> eventCalledMap;
+	private final Map<String, Boolean> calledNumbers;
 	private final List<String> events;
 	private final List<String> selectedEvents;
 
@@ -25,8 +26,8 @@ public class BingoBoard {
 		board = new String[WIDTH][HEIGHT];
 		selectedEvents = new ArrayList<>();
 		events = eventList;
-		eventCalledMap = new HashMap<>();
-		eventCalledMap.put(FREE, true);
+		calledNumbers = new HashMap<>();
+		calledNumbers.put(FREE, true);
 		player = numb;
 		win = false;
 	}
@@ -36,30 +37,41 @@ public class BingoBoard {
 	}
 
 	// Chooses events and adds them to the board.
-	public boolean randomizeEvents() {
-		if (events.size() < BOARD_SIZE - 1) {
-			return false;
-		}
+	public void randomizeEvents() {
+		final Random rand = new Random();
+
 		while (selectedEvents.size() < BOARD_SIZE - 1) {
-			final Random rand = new Random();
 			final int index = rand.nextInt(events.size());
 			final String str = events.get(index);
 			selectedEvents.add(str);
 			events.remove(str);
 		}
 
+		placeNumbers(selectedEvents, calledNumbers);
+	}
+
+	private void placeNumbers(final List<String> numbers, final Map<String, Boolean> calledNumbers) {
 		int count = 0;
 
-		for (final String str : selectedEvents) {
-			eventCalledMap.put(str, false);
+		for (final String bingoNumber : numbers) {
+			calledNumbers.put(bingoNumber, false);
+
 			if (count == BOARD_SIZE / 2) {
-				board[count / BOARD_DIM][count % BOARD_DIM] = FREE;
+				board[getX(count)][getY(count)] = FREE;
 				count++;
 			}
-			board[count / BOARD_DIM][count % BOARD_DIM] = str;
+
+			board[getX(count)][getY(count)] = bingoNumber;
 			count++;
 		}
-		return true;
+	}
+
+	private int getY(final int count) {
+		return count % HEIGHT;
+	}
+
+	private int getX(final int count) {
+		return count / WIDTH;
 	}
 
 	public void printBoard() {
@@ -71,6 +83,7 @@ public class BingoBoard {
 			printRowSeparator();
 			printLine(i);
 		}
+
 		printRowSeparator();
 		printBottomRow();
 	}
@@ -84,8 +97,8 @@ public class BingoBoard {
 	}
 
 	private void printLine(final int i) {
-		for (int j = 0; j < BOARD_DIM; j++) {
-			if (eventCalledMap.get(board[i][j]) == true) {
+		for (int j = 0; j < WIDTH; j++) {
+			if (calledNumbers.get(board[i][j]) == true) {
 				System.out.printf("|%3s", "X");
 			} else {
 				System.out.printf("|%3s", board[i][j]);
@@ -100,14 +113,11 @@ public class BingoBoard {
 	}
 
 	public void markNumber(final String value) {
-		if (eventCalledMap.containsKey(value)) {
-			eventCalledMap.put(value, Boolean.TRUE);
+		if (calledNumbers.containsKey(value)) {
+			calledNumbers.put(value, Boolean.TRUE);
 		}
 	}
 
-	/*
-	 * Checks board for a win and returns true if board won and false otherwise.
-	 */
 	public boolean checkWin() {
 		win = evalBoard();
 		return win;
@@ -121,60 +131,69 @@ public class BingoBoard {
 		return player;
 	}
 
-	// Checks the board for win. Returns true if a win is found.
 	private boolean evalBoard() {
-		int i, j, count;
+		final boolean horizontalWin = checkHorizontally(calledNumbers, board);
+		final boolean verticalWin = checkVertically(calledNumbers, board);
+		final boolean diagonallyWin = checkDiagonally(calledNumbers, board);
+		final boolean diagonallyR = checkDiagonallyTopRight(calledNumbers, board);
+		return horizontalWin || verticalWin || diagonallyWin || diagonallyR;
+	}
 
-		for (i = 0; i < BOARD_DIM; i++) {
-			j = 0;
-			count = 0;
-			// Checks horizontally for a win.
-			while (eventCalledMap.get(board[i][j]) != false) {
-				count++;
-				j++;
-				if (count == BOARD_DIM) {
-					return true;
-				}
-			} // end while
-
-			j = 0;
-			count = 0;
-
-			// Checks verically for a win.
-			while (eventCalledMap.get(board[j][i]) != false) {
-				count++;
-				j++;
-				if (count == BOARD_DIM) {
-					return true;
-				}
+	private boolean checkHorizontally(final Map<String, Boolean> calledNumbers, final String[][] board) {
+		boolean result = true;
+		for (int x = 0; x < HEIGHT; x++) {
+			for (int y = 0; y < WIDTH; y++) {
+				final Boolean statusAt = statusAt(calledNumbers, board, x, y);
+				result = result && statusAt;
 			}
-		}
 
-		i = 0;
-		count = 0;
-
-		// Checks the top left to bottom right diagnal for a win.
-		while (eventCalledMap.get(board[i][i]) != false) {
-			count++;
-			i++;
-			if (count == BOARD_DIM) {
-				return true;
-			}
-		}
-
-		i = BOARD_DIM - 1;
-		j = 0;
-		count = 0;
-		// Checks the top left to bottom right diagnal for a win.
-		while (eventCalledMap.get(board[i][j]) != false) {
-			count++;
-			i--;
-			j++;
-			if (count == BOARD_DIM) {
-				return true;
+			if (result) {
+				return result;
 			}
 		}
 
 		return false;
+	}
+
+	private boolean checkVertically(final Map<String, Boolean> calledNumbers, final String[][] board) {
+		boolean result = true;
+		for (int x = 0; x < WIDTH; x++) {
+			for (int y = 0; y < HEIGHT; y++) {
+				final Boolean statusAt = statusAt(calledNumbers, board, y, x);
+				result = result && statusAt;
+			}
+
+			if (result) {
+				return result;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean checkDiagonally(final Map<String, Boolean> calledNumbers, final String[][] board) {
+		boolean result = true;
+		for (int i = 0; i < WIDTH; i++) {
+			final Boolean statusAt = statusAt(calledNumbers, board, i, i);
+			result = result && statusAt;
+		}
+
+		return result;
+	}
+
+	private boolean checkDiagonallyTopRight(final Map<String, Boolean> calledNumbers, final String[][] board) {
+		boolean result = true;
+		final int farRight = WIDTH - 1;
+		for (int i = 0; i < WIDTH; i++) {
+			final Boolean statusAt = statusAt(calledNumbers, board, farRight - i, i);
+			result = result && statusAt;
+		}
+
+		return result;
+	}
+
+	private Boolean statusAt(final Map<String, Boolean> calledNumbers, final String[][] board, final int x,
+			final int y) {
+		return calledNumbers.get(board[x][y]);
 	}
 }
