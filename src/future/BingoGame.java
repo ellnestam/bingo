@@ -23,7 +23,7 @@ public class BingoGame {
 	}
 
 	public void addEvents() {
-		for (int i = 1; i <= 25; i++) {
+		for (int i = 1; i <= BingoBoard.BOARD_SIZE; i++) {
 			addEvent(Integer.toString(i));
 		}
 	}

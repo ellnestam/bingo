@@ -9,26 +9,24 @@ import java.util.Random;
 public class BingoBoard {
 	private final String board[][];
 
-	private final int WIDTH = 5;
-	private final int HEIGHT = 5;
+	private final static int WIDTH = 5;
+	private final static int HEIGHT = 5;
 
-	private final int BOARD_SIZE = WIDTH * HEIGHT;
+	public final static int BOARD_SIZE = WIDTH * HEIGHT;
 
 	private final Map<String, Boolean> calledNumbers;
 	private final List<String> events;
-	private final List<String> selectedEvents;
 
 	private final String FREE = "FREE SPACE";
-	private final int player;
+	private final int playerNumber;
 	private boolean win;
 
-	public BingoBoard(final ArrayList<String> eventList, final int numb) {
+	public BingoBoard(final ArrayList<String> eventList, final int number) {
 		board = new String[WIDTH][HEIGHT];
-		selectedEvents = new ArrayList<>();
 		events = eventList;
 		calledNumbers = new HashMap<>();
 		calledNumbers.put(FREE, true);
-		player = numb;
+		playerNumber = number;
 		win = false;
 	}
 
@@ -36,9 +34,9 @@ public class BingoBoard {
 		events.addAll(eventList);
 	}
 
-	// Chooses events and adds them to the board.
 	public void randomizeEvents() {
 		final Random rand = new Random();
+		final List<String> selectedEvents = new ArrayList<>();
 
 		while (selectedEvents.size() < BOARD_SIZE - 1) {
 			final int index = rand.nextInt(events.size());
@@ -47,35 +45,38 @@ public class BingoBoard {
 			events.remove(str);
 		}
 
-		placeNumbers(selectedEvents, calledNumbers);
+		prepareCalledNumbers(selectedEvents, calledNumbers);
+		placeNumbersOnBoard(selectedEvents, calledNumbers);
 	}
 
-	private void placeNumbers(final List<String> numbers, final Map<String, Boolean> calledNumbers) {
-		int count = 0;
+	private void prepareCalledNumbers(final List<String> selectedEvents, final Map<String, Boolean> calledNumbers) {
+		// calledNumbers.put(FREE, true);
 
-		for (final String bingoNumber : numbers) {
-			calledNumbers.put(bingoNumber, false);
-
-			if (count == BOARD_SIZE / 2) {
-				board[getX(count)][getY(count)] = FREE;
-				count++;
-			}
-
-			board[getX(count)][getY(count)] = bingoNumber;
-			count++;
+		for (final String number : selectedEvents) {
+			calledNumbers.put(number, false);
 		}
 	}
 
-	private int getY(final int count) {
-		return count % HEIGHT;
+	private void placeNumbersOnBoard(final List<String> numbers, final Map<String, Boolean> calledNumbers) {
+		for (int x = 0; x < WIDTH; x++) {
+			for (int y = 0; y < HEIGHT; y++) {
+				if (centerOfBoard(x, y)) {
+					board[x][y] = FREE;
+					y++;
+				}
+
+				final String number = numbers.remove(0);
+				board[x][y] = number;
+			}
+		}
 	}
 
-	private int getX(final int count) {
-		return count / WIDTH;
+	private boolean centerOfBoard(final int x, final int y) {
+		return x == 2 && y == 2;
 	}
 
 	public void printBoard() {
-		System.out.printf("Player %d\n", player);
+		System.out.printf("Player %d\n", playerNumber);
 
 		printTopRow();
 
@@ -128,7 +129,7 @@ public class BingoBoard {
 	}
 
 	public int getPlayer() {
-		return player;
+		return playerNumber;
 	}
 
 	private boolean evalBoard() {
