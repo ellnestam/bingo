@@ -8,10 +8,10 @@ public class BingoGame {
 
 	private final List<String> eventList;
 	private final int playerCount;
-	private boolean winnerDetermined;
+	private final boolean winnerDetermined;
 	private final List<BingoBoard> boardList;
 
-	BingoGame(final int players) {
+	public BingoGame(final int players) {
 		eventList = new ArrayList<>();
 		playerCount = players;
 		winnerDetermined = false;
@@ -33,20 +33,17 @@ public class BingoGame {
 			createAndPrintPlayerBoards(i);
 		}
 
-		winnerDetermined = false;
+		boolean winnerDetermined = false;
 
 		final Scanner in = new Scanner(System.in);
-		while (winnerNotDetermined()) {
+		while (!winnerDetermined) {
 			System.out.println("Enter Event:");
 			final String check = in.next();
 			for (final BingoBoard board : boardList) {
 				board.markNumber(check);
 				board.printBoard();
-				if (winnerNotDetermined()) {
-					winnerDetermined = board.checkWin();
-				} else {
-					board.checkWin();
-				}
+
+				winnerDetermined = board.checkWin() || winnerDetermined;
 			}
 		}
 
@@ -60,10 +57,6 @@ public class BingoGame {
 		board.randomizeEvents();
 		boardList.add(board);
 		board.printBoard();
-	}
-
-	private boolean winnerNotDetermined() {
-		return !winnerDetermined;
 	}
 
 	private void printAllWinners() {

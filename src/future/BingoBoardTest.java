@@ -38,6 +38,19 @@ public class BingoBoardTest {
 	}
 
 	@Test
+	public void horizontalWinRow2() {
+		calledNumbers.put("2", true);
+		calledNumbers.put("4", true);
+		calledNumbers.put("6", true);
+		calledNumbers.put("8", true);
+		calledNumbers.put("10", true);
+
+		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), 1);
+		assertTrue(bingoBoard.checkHorizontally(calledNumbers, board));
+		assertFalse(bingoBoard.checkVertically(calledNumbers, board));
+	}
+
+	@Test
 	public void verticalWin() {
 		calledNumbers.put("9", true);
 		calledNumbers.put("10", true);

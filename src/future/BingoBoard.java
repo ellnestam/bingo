@@ -113,6 +113,21 @@ public class BingoBoard {
 		System.out.println("|---|---|---|---|---|");
 	}
 
+	public void printSimple() {
+		printBoard(board);
+	}
+
+	private void printBoard(final String[][] board) {
+		for (int y = 0; y < 5; y++) {
+			System.out.print("|");
+			for (int x = 0; x < 5; x++) {
+				System.out.print(board[y][x] + "|");
+			}
+			System.out.println("");
+			System.out.println("-------------");
+		}
+	}
+
 	public void markNumber(final String value) {
 		if (calledNumbers.containsKey(value)) {
 			calledNumbers.put(value, Boolean.TRUE);
@@ -141,8 +156,8 @@ public class BingoBoard {
 	}
 
 	public boolean checkHorizontally(final Map<String, Boolean> calledNumbers, final String[][] board) {
-		boolean result = true;
 		for (int y = 0; y < WIDTH; y++) {
+			boolean result = true;
 			for (int x = 0; x < HEIGHT; x++) {
 				final Boolean statusAt = statusAt(calledNumbers, board, y, x);
 				result = result && statusAt;
