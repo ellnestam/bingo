@@ -102,7 +102,7 @@ public class BingoBoard {
 
 	private void printNumberOrXifCalled(final int x) {
 		for (int y = 0; y < WIDTH; y++) {
-			final String s = Verify.numberIsCalledAt(calledNumbers, board, x, y) ? "X" : board[x][y];
+			final String s = Verify.isCalledAt(calledNumbers, board, x, y) ? "X" : board[x][y];
 			System.out.printf("|%3s", s);
 		}
 
