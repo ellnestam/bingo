@@ -39,7 +39,7 @@ public class Verify {
 	}
 
 	public static boolean checkHorizontally(final Map<String, Boolean> calledNumbers, final String[][] board) {
-		for (int y = 0; y < board[0].length; y++) {
+		for (int y = 0; y < BingoBoard.WIDTH; y++) {
 			boolean result = true;
 			for (int x = 0; x < BingoBoard.HEIGHT; x++) {
 				result = result && isCalledAt(calledNumbers, board, y, x);
