@@ -52,10 +52,6 @@ public class BingoBoard {
 
 	private void prepareCalledNumbers(final List<String> selectedEvents, final Map<String, Boolean> calledNumbers) {
 		calledNumbers.put(FREE, true);
-
-		for (final String number : selectedEvents) {
-			calledNumbers.put(number, false);
-		}
 	}
 
 	private void placeNumbersOnBoard(final List<String> numbers, final Map<String, Boolean> calledNumbers) {
@@ -98,12 +94,12 @@ public class BingoBoard {
 		System.out.println("_____________________");
 	}
 
-	private void printLine(final int i) {
-		for (int j = 0; j < WIDTH; j++) {
-			if (calledNumbers.get(board[i][j]) == true) {
+	private void printLine(final int x) {
+		for (int y = 0; y < WIDTH; y++) {
+			if (numberIsCalledAt(calledNumbers, board, x, y)) {
 				System.out.printf("|%3s", "X");
 			} else {
-				System.out.printf("|%3s", board[i][j]);
+				System.out.printf("|%3s", board[x][y]);
 			}
 		}
 
@@ -130,9 +126,7 @@ public class BingoBoard {
 	}
 
 	public void markNumber(final String value) {
-		if (calledNumbers.containsKey(value)) {
-			calledNumbers.put(value, Boolean.TRUE);
-		}
+		calledNumbers.put(value, Boolean.TRUE);
 	}
 
 	public boolean hasWinningRow() {
@@ -155,7 +149,7 @@ public class BingoBoard {
 		for (int y = 0; y < WIDTH; y++) {
 			boolean result = true;
 			for (int x = 0; x < HEIGHT; x++) {
-				final Boolean statusAt = statusAt(calledNumbers, board, y, x);
+				final Boolean statusAt = numberIsCalledAt(calledNumbers, board, y, x);
 				result = result && statusAt;
 			}
 
@@ -171,7 +165,7 @@ public class BingoBoard {
 		for (int y = 0; y < HEIGHT; y++) {
 			boolean result = true;
 			for (int x = 0; x < WIDTH; x++) {
-				final Boolean statusAt = statusAt(calledNumbers, board, x, y);
+				final Boolean statusAt = numberIsCalledAt(calledNumbers, board, x, y);
 				result = result && statusAt;
 			}
 
@@ -186,7 +180,7 @@ public class BingoBoard {
 	public boolean checkDiagonally(final Map<String, Boolean> calledNumbers, final String[][] board) {
 		boolean result = true;
 		for (int i = 0; i < WIDTH; i++) {
-			final Boolean statusAt = statusAt(calledNumbers, board, i, i);
+			final Boolean statusAt = numberIsCalledAt(calledNumbers, board, i, i);
 			result = result && statusAt;
 		}
 
@@ -197,14 +191,14 @@ public class BingoBoard {
 		boolean result = true;
 		final int farRight = WIDTH - 1;
 		for (int i = 0; i < WIDTH; i++) {
-			final Boolean statusAt = statusAt(calledNumbers, board, farRight - i, i);
+			final Boolean statusAt = numberIsCalledAt(calledNumbers, board, farRight - i, i);
 			result = result && statusAt;
 		}
 
 		return result;
 	}
 
-	private Boolean statusAt(final Map<String, Boolean> calledNumbers, final String[][] board, final int x,
+	private Boolean numberIsCalledAt(final Map<String, Boolean> calledNumbers, final String[][] board, final int x,
 			final int y) {
 		final String number = board[x][y];
 		return calledNumbers.containsKey(number) && calledNumbers.get(number);
