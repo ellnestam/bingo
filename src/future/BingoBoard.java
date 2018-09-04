@@ -18,13 +18,13 @@ public class BingoBoard {
 	private final List<String> events;
 
 	private final String FREE = "FREE SPACE";
-	private final int playerNumber;
+	private final String player;
 
 	public BingoBoard(final ArrayList<String> eventList, final int number) {
 		board = new String[WIDTH][HEIGHT];
 		events = eventList;
 		calledNumbers = new HashMap<>();
-		playerNumber = number;
+		player = "" + number;
 	}
 
 	public void updateEvents(final ArrayList<String> eventList) {
@@ -77,7 +77,7 @@ public class BingoBoard {
 	}
 
 	public void printBoard() {
-		System.out.printf("Player %d\n", playerNumber);
+		System.out.println("Player: " + player);
 
 		printTopRow();
 
@@ -143,8 +143,8 @@ public class BingoBoard {
 		return checkWin();
 	}
 
-	public int getPlayer() {
-		return playerNumber;
+	public String getPlayer() {
+		return player;
 	}
 
 	private boolean evalBoard() {

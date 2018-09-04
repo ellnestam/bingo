@@ -7,10 +7,10 @@ import java.util.Scanner;
 public class BingoGame {
 
 	private final int playerCount;
-	private final List<BingoBoard> boardList;
+	private final List<BingoBoard> boards;
 
 	public BingoGame(final int players) {
-		boardList = new ArrayList<>();
+		boards = new ArrayList<>();
 		playerCount = players;
 	}
 
@@ -31,7 +31,7 @@ public class BingoGame {
 			final ArrayList<String> events = new ArrayList<String>(eventList);
 			final BingoBoard board = new BingoBoard(events, i);
 			board.prepareBoard();
-			boardList.add(board);
+			boards.add(board);
 			board.printBoard();
 		}
 
@@ -41,7 +41,7 @@ public class BingoGame {
 		while (!winnerDetermined) {
 			System.out.println("Enter Event:");
 			final String check = in.next();
-			for (final BingoBoard board : boardList) {
+			for (final BingoBoard board : boards) {
 				board.markNumber(check);
 				board.printBoard();
 
@@ -54,11 +54,9 @@ public class BingoGame {
 	}
 
 	private void printAllWinners() {
-		for (final BingoBoard board : boardList) {
-			if (board.hasWinningRow()) {
-				System.out.printf("Player %d wins!\n\n", board.getPlayer());
-			}
-		}
+		boards.stream()
+				.filter(b -> b.hasWinningRow())
+				.forEach(b -> System.out.printf("Player %s wins!\n\n", b.getPlayer()));
 	}
 
 }
