@@ -135,12 +135,8 @@ public class BingoBoard {
 		}
 	}
 
-	public boolean checkWin() {
-		return evalBoard();
-	}
-
 	public boolean hasWinningRow() {
-		return checkWin();
+		return evalBoard();
 	}
 
 	public String getPlayer() {

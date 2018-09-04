@@ -37,7 +37,7 @@ public class BingoGame {
 			for (final BingoBoard board : boards) {
 				board.markNumber(check);
 				board.printBoard();
-				winnerDetermined = board.checkWin() || winnerDetermined;
+				winnerDetermined = board.hasWinningRow() || winnerDetermined;
 			}
 		}
 
