@@ -33,8 +33,8 @@ public class BingoBoardTest {
 		calledNumbers.put("9", true);
 
 		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), "1");
-		assertTrue(bingoBoard.checkHorizontally(calledNumbers, board));
-		assertFalse(bingoBoard.checkVertically(calledNumbers, board));
+		assertTrue(Verify.checkHorizontally(calledNumbers, board));
+		assertFalse(Verify.checkVertically(calledNumbers, board));
 	}
 
 	@Test
@@ -46,8 +46,8 @@ public class BingoBoardTest {
 		calledNumbers.put("10", true);
 
 		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), "Player");
-		assertTrue(bingoBoard.checkHorizontally(calledNumbers, board));
-		assertFalse(bingoBoard.checkVertically(calledNumbers, board));
+		assertTrue(Verify.checkHorizontally(calledNumbers, board));
+		assertFalse(Verify.checkVertically(calledNumbers, board));
 	}
 
 	@Test
@@ -59,8 +59,8 @@ public class BingoBoardTest {
 		calledNumbers.put("25", true);
 
 		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), "Player");
-		assertTrue(bingoBoard.checkVertically(calledNumbers, board));
-		assertFalse(bingoBoard.checkHorizontally(calledNumbers, board));
+		assertTrue(Verify.checkVertically(calledNumbers, board));
+		assertFalse(Verify.checkHorizontally(calledNumbers, board));
 	}
 
 	@Test
@@ -72,8 +72,8 @@ public class BingoBoardTest {
 		calledNumbers.put("25", true);
 
 		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), "Player");
-		assertTrue(bingoBoard.checkDiagonally(calledNumbers, board));
-		assertFalse(bingoBoard.checkHorizontally(calledNumbers, board));
+		assertTrue(Verify.checkDiagonally(calledNumbers, board));
+		assertFalse(Verify.checkHorizontally(calledNumbers, board));
 	}
 
 	@Test
@@ -85,8 +85,8 @@ public class BingoBoardTest {
 		calledNumbers.put("9", true);
 
 		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), "Player");
-		assertTrue(bingoBoard.checkDiagonallyTopRight(calledNumbers, board));
-		assertFalse(bingoBoard.checkHorizontally(calledNumbers, board));
+		assertTrue(Verify.checkDiagonallyTopRight(calledNumbers, board));
+		assertFalse(Verify.checkHorizontally(calledNumbers, board));
 	}
 
 	void printBoard(final String[][] board) {
@@ -107,5 +107,4 @@ public class BingoBoardTest {
 			x++;
 		}
 	}
-
 }

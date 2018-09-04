@@ -8,18 +8,15 @@ import java.util.stream.IntStream;
 
 public class BingoGame {
 
-	private final List<BingoBoard> boards;
+	private final List<BingoBoard> boards = new ArrayList<>();
+	private final List<String> numbers;
 
 	public BingoGame() {
-		boards = new ArrayList<>();
+		numbers = numbersForGame();
 	}
 
-	public BingoBoard addPlayer(final String playerName) {
-		final List<String> numbers = new ArrayList<String>(numbers());
-		final BingoBoard board = new BingoBoard(numbers, playerName);
-		boards.add(board);
-		board.prepareBoard();
-		return board;
+	public void addPlayer(final String playerName) {
+		boards.add(new BingoBoard(numbers, playerName));
 	}
 
 	public void run() {
@@ -47,10 +44,10 @@ public class BingoGame {
 	private void printAllWinners() {
 		boards.stream()
 				.filter(b -> b.hasWinningRow())
-				.forEach(b -> System.out.printf("Player %s wins!\n\n", b.getPlayer()));
+				.forEach(b -> System.out.printf("%s wins!\n\n", b.player()));
 	}
 
-	private List<String> numbers() {
+	private static List<String> numbersForGame() {
 		return IntStream
 				.range(1, BingoBoard.BOARD_SIZE)
 				.mapToObj(i -> i + "")
