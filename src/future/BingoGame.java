@@ -6,31 +6,33 @@ import java.util.Scanner;
 
 public class BingoGame {
 
-	private final List<String> eventList;
 	private final int playerCount;
-	private final boolean winnerDetermined;
 	private final List<BingoBoard> boardList;
 
 	public BingoGame(final int players) {
-		eventList = new ArrayList<>();
-		playerCount = players;
-		winnerDetermined = false;
 		boardList = new ArrayList<>();
+		playerCount = players;
 	}
 
-	private void addEvent(final String event) {
-		eventList.add(event);
-	}
+	private List<String> addEvents() {
+		final List<String> eventList = new ArrayList<>();
 
-	public void addEvents() {
 		for (int i = 1; i <= BingoBoard.BOARD_SIZE; i++) {
-			addEvent(Integer.toString(i));
+			eventList.add(Integer.toString(i));
 		}
+
+		return eventList;
 	}
 
-	public void startGame() {
+	public void run() {
+		final List<String> eventList = addEvents();
+
 		for (int i = 1; i <= playerCount; i++) {
-			createAndPrintPlayerBoards(i);
+			final ArrayList<String> events = new ArrayList<String>(eventList);
+			final BingoBoard board = new BingoBoard(events, i);
+			board.prepareBoard();
+			boardList.add(board);
+			board.printBoard();
 		}
 
 		boolean winnerDetermined = false;
@@ -49,14 +51,6 @@ public class BingoGame {
 
 		printAllWinners();
 
-	}
-
-	private void createAndPrintPlayerBoards(final int i) {
-		final ArrayList<String> events = new ArrayList<String>(eventList);
-		final BingoBoard board = new BingoBoard(events, i);
-		board.randomizeEvents();
-		boardList.add(board);
-		board.printBoard();
 	}
 
 	private void printAllWinners() {

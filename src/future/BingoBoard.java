@@ -25,7 +25,6 @@ public class BingoBoard {
 		board = new String[WIDTH][HEIGHT];
 		events = eventList;
 		calledNumbers = new HashMap<>();
-		calledNumbers.put(FREE, true);
 		playerNumber = number;
 		win = false;
 	}
@@ -34,19 +33,23 @@ public class BingoBoard {
 		events.addAll(eventList);
 	}
 
-	public void randomizeEvents() {
+	public void prepareBoard() {
+		final List<String> numbers = randomizeNumbers();
+		prepareCalledNumbers(numbers, calledNumbers);
+		placeNumbersOnBoard(numbers, calledNumbers);
+	}
+
+	private List<String> randomizeNumbers() {
 		final Random rand = new Random();
-		final List<String> selectedEvents = new ArrayList<>();
+		final List<String> numbers = new ArrayList<>();
 
-		while (selectedEvents.size() < BOARD_SIZE - 1) {
+		while (numbers.size() < BOARD_SIZE - 1) {
 			final int index = rand.nextInt(events.size());
-			final String str = events.get(index);
-			selectedEvents.add(str);
-			events.remove(str);
+			final String randomNumber = events.get(index);
+			numbers.add(randomNumber);
+			events.remove(randomNumber);
 		}
-
-		prepareCalledNumbers(selectedEvents, calledNumbers);
-		placeNumbersOnBoard(selectedEvents, calledNumbers);
+		return numbers;
 	}
 
 	private void prepareCalledNumbers(final List<String> selectedEvents, final Map<String, Boolean> calledNumbers) {
