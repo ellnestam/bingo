@@ -19,14 +19,12 @@ public class BingoBoard {
 
 	private final String FREE = "FREE SPACE";
 	private final int playerNumber;
-	private boolean win;
 
 	public BingoBoard(final ArrayList<String> eventList, final int number) {
 		board = new String[WIDTH][HEIGHT];
 		events = eventList;
 		calledNumbers = new HashMap<>();
 		playerNumber = number;
-		win = false;
 	}
 
 	public void updateEvents(final ArrayList<String> eventList) {
@@ -138,12 +136,11 @@ public class BingoBoard {
 	}
 
 	public boolean checkWin() {
-		win = evalBoard();
-		return win;
+		return evalBoard();
 	}
 
 	public boolean hasWinningRow() {
-		return win;
+		return checkWin();
 	}
 
 	public int getPlayer() {
