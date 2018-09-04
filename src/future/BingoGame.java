@@ -14,13 +14,6 @@ public class BingoGame {
 		boards = new ArrayList<>();
 	}
 
-	private List<String> numbers() {
-		return IntStream
-				.range(1, BingoBoard.BOARD_SIZE)
-				.mapToObj(i -> i + "")
-				.collect(Collectors.toList());
-	}
-
 	public BingoBoard addPlayer(final String playerName) {
 		final List<String> numbers = new ArrayList<String>(numbers());
 		final BingoBoard board = new BingoBoard(numbers, playerName);
@@ -55,5 +48,12 @@ public class BingoGame {
 		boards.stream()
 				.filter(b -> b.hasWinningRow())
 				.forEach(b -> System.out.printf("Player %s wins!\n\n", b.getPlayer()));
+	}
+
+	private List<String> numbers() {
+		return IntStream
+				.range(1, BingoBoard.BOARD_SIZE)
+				.mapToObj(i -> i + "")
+				.collect(Collectors.toList());
 	}
 }
