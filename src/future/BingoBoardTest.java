@@ -83,17 +83,6 @@ public class BingoBoardTest {
 		assertFalse(Verify.checkHorizontally(calledNumbers, board));
 	}
 
-	void printBoard(final String[][] board) {
-		for (int y = 0; y < 5; y++) {
-			System.out.print("|");
-			for (int x = 0; x < 5; x++) {
-				System.out.print(board[y][x] + "|");
-			}
-			System.out.println("");
-			System.out.println("-------------");
-		}
-	}
-
 	private void addRowTo(final String[][] board, final int rowNumber, final String... values) {
 		int x = 0;
 		for (final String value : values) {
