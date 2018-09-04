@@ -3,33 +3,32 @@ package future;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BingoGame {
 
 	private final int playerCount;
 	private final List<BingoBoard> boards;
 
-	public BingoGame(final int players) {
+	public BingoGame(final int numberOfPlayers) {
 		boards = new ArrayList<>();
-		playerCount = players;
+		playerCount = numberOfPlayers;
 	}
 
-	private List<String> addEvents() {
-		final List<String> eventList = new ArrayList<>();
-
-		for (int i = 1; i <= BingoBoard.BOARD_SIZE; i++) {
-			eventList.add(Integer.toString(i));
-		}
-
-		return eventList;
+	private List<String> numbers() {
+		return IntStream
+				.range(1, BingoBoard.BOARD_SIZE)
+				.mapToObj(i -> i + "")
+				.collect(Collectors.toList());
 	}
 
 	public void run() {
-		final List<String> eventList = addEvents();
+		final List<String> eventList = numbers();
 
 		for (int i = 1; i <= playerCount; i++) {
-			final ArrayList<String> events = new ArrayList<String>(eventList);
-			final BingoBoard board = new BingoBoard(events, i);
+			final ArrayList<String> numbers = new ArrayList<String>(eventList);
+			final BingoBoard board = new BingoBoard(numbers, i);
 			board.prepareBoard();
 			boards.add(board);
 			board.printBoard();
