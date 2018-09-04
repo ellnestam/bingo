@@ -32,7 +32,7 @@ public class BingoBoardTest {
 		calledNumbers.put("7", true);
 		calledNumbers.put("9", true);
 
-		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), 1);
+		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), "1");
 		assertTrue(bingoBoard.checkHorizontally(calledNumbers, board));
 		assertFalse(bingoBoard.checkVertically(calledNumbers, board));
 	}
@@ -45,7 +45,7 @@ public class BingoBoardTest {
 		calledNumbers.put("8", true);
 		calledNumbers.put("10", true);
 
-		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), 1);
+		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), "Player");
 		assertTrue(bingoBoard.checkHorizontally(calledNumbers, board));
 		assertFalse(bingoBoard.checkVertically(calledNumbers, board));
 	}
@@ -58,7 +58,7 @@ public class BingoBoardTest {
 		calledNumbers.put("20", true);
 		calledNumbers.put("25", true);
 
-		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), 1);
+		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), "Player");
 		assertTrue(bingoBoard.checkVertically(calledNumbers, board));
 		assertFalse(bingoBoard.checkHorizontally(calledNumbers, board));
 	}
@@ -71,7 +71,7 @@ public class BingoBoardTest {
 		calledNumbers.put("18", true);
 		calledNumbers.put("25", true);
 
-		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), 1);
+		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), "Player");
 		assertTrue(bingoBoard.checkDiagonally(calledNumbers, board));
 		assertFalse(bingoBoard.checkHorizontally(calledNumbers, board));
 	}
@@ -84,7 +84,7 @@ public class BingoBoardTest {
 		calledNumbers.put("8", true);
 		calledNumbers.put("9", true);
 
-		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), 1);
+		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), "Player");
 		assertTrue(bingoBoard.checkDiagonallyTopRight(calledNumbers, board));
 		assertFalse(bingoBoard.checkHorizontally(calledNumbers, board));
 	}

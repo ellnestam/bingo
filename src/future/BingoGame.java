@@ -8,12 +8,10 @@ import java.util.stream.IntStream;
 
 public class BingoGame {
 
-	private final int playerCount;
 	private final List<BingoBoard> boards;
 
-	public BingoGame(final int numberOfPlayers) {
+	public BingoGame() {
 		boards = new ArrayList<>();
-		playerCount = numberOfPlayers;
 	}
 
 	private List<String> numbers() {
@@ -23,14 +21,16 @@ public class BingoGame {
 				.collect(Collectors.toList());
 	}
 
-	public void run() {
-		final List<String> eventList = numbers();
+	public BingoBoard addPlayer(final String playerName) {
+		final List<String> numbers = new ArrayList<String>(numbers());
+		final BingoBoard board = new BingoBoard(numbers, playerName);
+		boards.add(board);
+		board.prepareBoard();
+		return board;
+	}
 
-		for (int i = 1; i <= playerCount; i++) {
-			final ArrayList<String> numbers = new ArrayList<String>(eventList);
-			final BingoBoard board = new BingoBoard(numbers, i);
-			board.prepareBoard();
-			boards.add(board);
+	public void run() {
+		for (final BingoBoard board : boards) {
 			board.printBoard();
 		}
 
@@ -40,16 +40,15 @@ public class BingoGame {
 		while (!winnerDetermined) {
 			System.out.println("Enter Event:");
 			final String check = in.next();
+
 			for (final BingoBoard board : boards) {
 				board.markNumber(check);
 				board.printBoard();
-
 				winnerDetermined = board.checkWin() || winnerDetermined;
 			}
 		}
 
 		printAllWinners();
-
 	}
 
 	private void printAllWinners() {
@@ -57,5 +56,4 @@ public class BingoGame {
 				.filter(b -> b.hasWinningRow())
 				.forEach(b -> System.out.printf("Player %s wins!\n\n", b.getPlayer()));
 	}
-
 }

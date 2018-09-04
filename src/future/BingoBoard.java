@@ -20,11 +20,11 @@ public class BingoBoard {
 	private final String FREE = "FREE SPACE";
 	private final String player;
 
-	public BingoBoard(final ArrayList<String> eventList, final int number) {
+	public BingoBoard(final List<String> eventList, final String playerName) {
 		board = new String[WIDTH][HEIGHT];
 		events = eventList;
 		calledNumbers = new HashMap<>();
-		player = "" + number;
+		player = playerName;
 	}
 
 	public void updateEvents(final ArrayList<String> eventList) {
