@@ -3,7 +3,6 @@ package future;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +31,6 @@ public class BingoBoardTest {
 		calledNumbers.put("7", true);
 		calledNumbers.put("9", true);
 
-		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), "1");
 		assertTrue(Verify.checkHorizontally(calledNumbers, board));
 		assertFalse(Verify.checkVertically(calledNumbers, board));
 	}
@@ -45,7 +43,6 @@ public class BingoBoardTest {
 		calledNumbers.put("8", true);
 		calledNumbers.put("10", true);
 
-		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), "Player");
 		assertTrue(Verify.checkHorizontally(calledNumbers, board));
 		assertFalse(Verify.checkVertically(calledNumbers, board));
 	}
@@ -58,7 +55,6 @@ public class BingoBoardTest {
 		calledNumbers.put("20", true);
 		calledNumbers.put("25", true);
 
-		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), "Player");
 		assertTrue(Verify.checkVertically(calledNumbers, board));
 		assertFalse(Verify.checkHorizontally(calledNumbers, board));
 	}
@@ -71,7 +67,6 @@ public class BingoBoardTest {
 		calledNumbers.put("18", true);
 		calledNumbers.put("25", true);
 
-		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), "Player");
 		assertTrue(Verify.checkDiagonally(calledNumbers, board));
 		assertFalse(Verify.checkHorizontally(calledNumbers, board));
 	}
@@ -84,8 +79,7 @@ public class BingoBoardTest {
 		calledNumbers.put("8", true);
 		calledNumbers.put("9", true);
 
-		final BingoBoard bingoBoard = new BingoBoard(new ArrayList<>(), "Player");
-		assertTrue(Verify.checkDiagonallyTopRight(calledNumbers, board));
+		assertTrue(Verify.checkDiagonallyFlipped(calledNumbers, board));
 		assertFalse(Verify.checkHorizontally(calledNumbers, board));
 	}
 

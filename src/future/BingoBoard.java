@@ -26,18 +26,17 @@ public class BingoBoard {
 	}
 
 	public void printBoard() {
-		System.out.println(playerName);
+		printPlayerName();
 		printTopRow();
 		printBoardRows();
 		printBottomRow();
 	}
 
 	public boolean hasWinningRow() {
-		final boolean horizontalWin = Verify.checkHorizontally(calledNumbers, board);
-		final boolean verticalWin = Verify.checkVertically(calledNumbers, board);
-		final boolean diagonallyWin = Verify.checkDiagonally(calledNumbers, board);
-		final boolean diagonallyR = Verify.checkDiagonallyTopRight(calledNumbers, board);
-		return horizontalWin || verticalWin || diagonallyWin || diagonallyR;
+		return Verify.checkHorizontally(calledNumbers, board)
+				|| Verify.checkVertically(calledNumbers, board)
+				|| Verify.checkDiagonally(calledNumbers, board)
+				|| Verify.checkDiagonallyFlipped(calledNumbers, board);
 	}
 
 	public String player() {
@@ -77,6 +76,10 @@ public class BingoBoard {
 		return x == 2 && y == 2;
 	}
 
+	private void printPlayerName() {
+		System.out.println(playerName);
+	}
+
 	private void printBoardRows() {
 		for (int y = 0; y < HEIGHT; y++) {
 			printRowSeparator();
@@ -93,6 +96,10 @@ public class BingoBoard {
 		System.out.println("\n");
 	}
 
+	private void printRowSeparator() {
+		System.out.println("|---|---|---|---|---|");
+	}
+
 	private void printNumberOrXifCalled(final int x) {
 		for (int y = 0; y < WIDTH; y++) {
 			final String s = Verify.numberIsCalledAt(calledNumbers, board, x, y) ? "X" : board[x][y];
@@ -100,9 +107,5 @@ public class BingoBoard {
 		}
 
 		System.out.println("|");
-	}
-
-	private void printRowSeparator() {
-		System.out.println("|---|---|---|---|---|");
 	}
 }

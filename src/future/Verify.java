@@ -10,7 +10,7 @@ public class Verify {
 		return calledNumbers.containsKey(number) && calledNumbers.get(number);
 	}
 
-	public static boolean checkDiagonallyTopRight(final Map<String, Boolean> calledNumbers, final String[][] board) {
+	public static boolean checkDiagonallyFlipped(final Map<String, Boolean> calledNumbers, final String[][] board) {
 		boolean result = true;
 		final int farRight = BingoBoard.WIDTH - 1;
 		for (int i = 0; i < BingoBoard.WIDTH; i++) {
