@@ -63,7 +63,7 @@ public class BingoGame {
 	private static List<String> numbersForGame() {
 		return IntStream
 				.range(1, BingoBoard.BOARD_SIZE)
-				.mapToObj(i -> i + "")
+				.mapToObj(number -> number + "")
 				.collect(Collectors.toList());
 	}
 }
