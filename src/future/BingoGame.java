@@ -20,25 +20,38 @@ public class BingoGame {
 	}
 
 	public void run() {
-		for (final BingoBoard board : boards) {
-			board.printBoard();
-		}
+		presentBoards();
 
 		boolean winnerDetermined = false;
 
-		final Scanner in = new Scanner(System.in);
+		final Scanner userInput = new Scanner(System.in);
 		while (!winnerDetermined) {
-			System.out.println("Enter Event:");
-			final String check = in.next();
+			askUserForInput("Enter drawn number:");
+			final String number = userInput.next();
 
-			for (final BingoBoard board : boards) {
-				board.markNumber(check);
-				board.printBoard();
-				winnerDetermined = board.hasWinningRow() || winnerDetermined;
-			}
+			winnerDetermined = doTurn(winnerDetermined, number);
 		}
 
 		printAllWinners();
+	}
+
+	private void askUserForInput(final String text) {
+		System.out.println(text);
+	}
+
+	private boolean doTurn(boolean winnerDetermined, final String number) {
+		for (final BingoBoard board : boards) {
+			board.markNumber(number);
+			board.printBoard();
+			winnerDetermined = board.hasWinningRow() || winnerDetermined;
+		}
+		return winnerDetermined;
+	}
+
+	private void presentBoards() {
+		for (final BingoBoard board : boards) {
+			board.printBoard();
+		}
 	}
 
 	private void printAllWinners() {
