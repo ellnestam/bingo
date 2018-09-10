@@ -31,6 +31,21 @@ public class BingoBoard {
 		return shuffeledNumbers;
 	}
 
+	private void placeNumbersOnBoard(final List<String> numbers) {
+		markCenterCalled();
+
+		for (int x = 0; x < WIDTH; x++) {
+			for (int y = 0; y < HEIGHT; y++) {
+				if (centerOfBoard(x, y)) {
+					board[x][y] = FREE;
+					y++;
+				}
+
+				board[x][y] = numbers.remove(0);
+			}
+		}
+	}
+
 	public void printBoard() {
 		printPlayerName();
 		printTopRow();
@@ -55,21 +70,6 @@ public class BingoBoard {
 
 	private void markCenterCalled() {
 		calledNumbers.put(FREE, true);
-	}
-
-	private void placeNumbersOnBoard(final List<String> numbers) {
-		markCenterCalled();
-
-		for (int x = 0; x < WIDTH; x++) {
-			for (int y = 0; y < HEIGHT; y++) {
-				if (centerOfBoard(x, y)) {
-					board[x][y] = FREE;
-					y++;
-				}
-
-				board[x][y] = numbers.remove(0);
-			}
-		}
 	}
 
 	private boolean centerOfBoard(final int x, final int y) {
