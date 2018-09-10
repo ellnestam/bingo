@@ -25,6 +25,12 @@ public class BingoBoard {
 		placeNumbersOnBoard(shuffle(numbersForBoard));
 	}
 
+	private List<String> shuffle(final List<String> boardNumbers) {
+		final List<String> shuffeledNumbers = new ArrayList<>(boardNumbers);
+		Collections.shuffle(shuffeledNumbers, new Random());
+		return shuffeledNumbers;
+	}
+
 	public void printBoard() {
 		printPlayerName();
 		printTopRow();
@@ -45,12 +51,6 @@ public class BingoBoard {
 
 	public void markNumber(final String value) {
 		calledNumbers.put(value, Boolean.TRUE);
-	}
-
-	private List<String> shuffle(final List<String> boardNumbers) {
-		final List<String> shuffeledNumbers = new ArrayList<>(boardNumbers);
-		Collections.shuffle(shuffeledNumbers, new Random());
-		return shuffeledNumbers;
 	}
 
 	private void markCenterCalled() {
